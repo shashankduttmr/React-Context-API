@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Fragment} from "react"
+import Context from "./context/context"
+import Provider  from "./Provider"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Agents(){
+    return <AgentOne/>
 }
 
-export default App;
+function AgentOne(){
+    return <AgentTwo/>
+}
+
+function AgentTwo(){
+    return <AgentBond/>
+}
+
+function AgentBond(){
+    return(
+        <Context.Consumer>
+            {
+                (context)=>(
+                    <Fragment>
+                        <span>Practice for Context API</span>
+                        <h1>Mission Name :{context.data.M_name}</h1>
+                        <h2>Agent :{context.data.Agent}</h2>
+                        <h3>Mission Status :{context.data.status}</h3>
+                        <button
+                            onClick={()=>{
+                                context.ChangeStatus()                                
+                            }}
+                        >Change Status</button>
+                    </Fragment>
+                )
+            }
+        </Context.Consumer>
+    )
+}
+
+function App(){
+    return(
+        <Fragment>
+            <h1>Context API with Hooks and Fragments</h1>
+            <Provider>
+                <Agents/>
+            </Provider>
+        </Fragment>
+    )
+}
+
+export default App
